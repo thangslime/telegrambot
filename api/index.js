@@ -14,10 +14,4 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // * Api routes
 app.use("/api", routes);
 
-let PORT = process.env.PORT || 8443;
-
-app.listen(PORT, () => {
-    console.log(`Example app listening on port ${PORT}`)
-})
-
 module.exports = app
