@@ -10,7 +10,7 @@ app.get('/test', (req, res) => {
 
 app.post('/webhook', (req, res) => {
     res.status = 200;
-    res.json(res.body);
+    res.json(req.body);
 })
 
 module.exports = app
