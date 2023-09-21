@@ -37,9 +37,12 @@ app.post("/webhook", async (req, res) => {
             );
         } else {
             if (body.chat.type != 'private') {
+                const user_name = `${body.from.first_name ? body.from.first_name : ""} ${
+                    body.from.last_name ? body.from.last_name : ""
+                    }`.trim();
                 const data = {
                     chat_id: `@${body.chat.username}`,
-                    text: `Dìa dia 🤘🤘🤘!!!`,
+                    text: `Dìa dia <i><b>${user_name}</b></i> 🤘🤘🤘!!!`,
                     parse_mode: "HTML",
                     };
         
