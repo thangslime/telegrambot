@@ -1,5 +1,6 @@
 // index.js
 const express = require('express')
+const axios = require("axios");
 
 const app = express()
 const PORT = 8443
@@ -12,8 +13,8 @@ app.get('/', (req, res) => {
   res.send('Hey this is my API running 🥳')
 })
 
-app.get('/about', (req, res) => {
-  res.send('This is my about route..... ')
+app.post('/webhook', (req, res) => {
+  res.status(200).json(req.body)
 })
 
 // Export the Express API
