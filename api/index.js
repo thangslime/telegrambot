@@ -3,7 +3,7 @@ import axios from "axios";
 
 export default async (req, res) => {
   try {
-    const body = req.body.message;
+    const body = req.body;
     console.log(body);
     // const teleToken = req.query.token;
     // if (body.new_chat_member) {
