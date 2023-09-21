@@ -9,8 +9,7 @@ app.get('/test', (req, res) => {
 });
 
 app.post('/webhook', (req, res) => {
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'application/json');
+    res.status = 200;
     res.json(res.body);
 })
 
