@@ -1,7 +1,7 @@
 import { NowRequest, NowResponse } from "@vercel/node";
 import axios from "axios";
 
-export default async (req, res) => {
+export default handler = async (req, res) => {
   try {
     const body = req.body;
     console.log(body);
