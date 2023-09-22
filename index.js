@@ -163,7 +163,7 @@ app.post("/webhook", async (req, res) => {
       };
     
       // Send a message with the inline markup
-      await bot.sendMessage(msg.chat.id, 'Ây dô đứa nào gọi tao?', {
+      await bot.sendMessage(message.chat.id, 'Ây dô đứa nào gọi tao?', {
         reply_markup: markup
       });
     }
