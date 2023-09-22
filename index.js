@@ -152,7 +152,7 @@ app.post("/webhook", async (req, res) => {
   }
 });
 
-bot.onText(/\/summon/, async (msg, match) => {
+bot.onText('/summon', async (msg, match) => {
   const opts = {
       reply_to_message_id: msg.message_id,
       reply_markup: JSON.stringify({
