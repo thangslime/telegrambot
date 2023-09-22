@@ -117,25 +117,25 @@ app.post("/webhook", async (req, res) => {
     console.log(body);
     const message = body.message || null
     if (message) {
-      if (message.new_chat_member) {
-        const newMember = message.new_chat_member;
-        const user_name = `${newMember.first_name ? newMember.first_name : ""} ${
-          newMember.last_name ? newMember.last_name : ""
-        }`.trim();
-        const data = {
-          chat_id: `@${message.chat.username}`,
-          text: `Hi <i><b>${user_name}</b></i>,\nChào mừng bạn đến với <strong>${message.chat.title}</strong>.\nChúc bạn một ngày đầy may mắn.`,
-          parse_mode: "HTML",
-        };
+      // if (message.new_chat_member) {
+      //   const newMember = message.new_chat_member;
+      //   const user_name = `${newMember.first_name ? newMember.first_name : ""} ${
+      //     newMember.last_name ? newMember.last_name : ""
+      //   }`.trim();
+      //   const data = {
+      //     chat_id: `@${message.chat.username}`,
+      //     text: `Hi <i><b>${user_name}</b></i>,\nChào mừng bạn đến với <strong>${message.chat.title}</strong>.\nChúc bạn một ngày đầy may mắn.`,
+      //     parse_mode: "HTML",
+      //   };
   
-        await axios.post(
-          `https://api.telegram.org/bot${
-            process.env.BOT_APIKEY ||
-            "6468513372:AAFVyJWK7R0lQ5CkYGPf0-t_hAR_qgjOF1o"
-          }/sendMessage`,
-          data
-        );
-      } else {
+      //   await axios.post(
+      //     `https://api.telegram.org/bot${
+      //       process.env.BOT_APIKEY ||
+      //       "6468513372:AAFVyJWK7R0lQ5CkYGPf0-t_hAR_qgjOF1o"
+      //     }/sendMessage`,
+      //     data
+      //   );
+      // } else {
         if (message.chat.type != "private") {
           const user_name = `${
             message.from.first_name ? message.from.first_name : ""
@@ -144,7 +144,7 @@ app.post("/webhook", async (req, res) => {
           await bot.sendMessage(message.chat.id, `Dìa dia <i><b>${user_name}</b></i> 🤘🤘🤘!!!`, {parse_mode: "HTML"});
           await handleEvent(bot)
         }
-      }
+      // }
     }
   
     res.status(200).json({ success: true, dataBody: req.body });
