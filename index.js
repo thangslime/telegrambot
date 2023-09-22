@@ -170,11 +170,10 @@ app.post("/webhook", async (req, res) => {
     
     bot.on('callback_query', async (callbackQuery) => {
       // Get the callback_data
-      const data = JSON.parse(callbackQuery.data);
       const opts = {
         chat_id: callbackQuery.message.chat.id,
       };
-      switch (data.callback_query.data) {
+      switch (callbackQuery.callback_query.data) {
         case 'support':
           await bot.sendMessage(opts.chat_id, `Hỏi google đê`);
           break;
