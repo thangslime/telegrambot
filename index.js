@@ -7,7 +7,7 @@ const bot = new TelegramBot(process.env.BOT_APIKEY || "6468513372:AAFVyJWK7R0lQ5
 const webhookURL = 'https://telegrambot-gamma-ten.vercel.app/webhook';
 
 // Register the web hook with Telegram
-bot.setWebhook(webhookURL);
+bot.setWebHook(webhookURL);
 // server setup
 const express = require("express");
 const axios = require("axios");
