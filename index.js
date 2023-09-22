@@ -124,7 +124,7 @@ app.post("/webhook", async (req, res) => {
         }`.trim();
         const data = {
           chat_id: `@${message.chat.username}`,
-          text: `Hi <i><b>${user_name}</b></i>,\nChào mừng bạn đến với <strong>${message.chat.title}</strong>.\nChúc bạn may mắn.`,
+          text: `Hi <i><b>${user_name}</b></i>,\nChào mừng bạn đến với <strong>${message.chat.title}</strong>.\nChúc bạn một ngày đầy may mắn.`,
           parse_mode: "HTML",
         };
   
