@@ -14,7 +14,7 @@ const axios = require("axios");
 const bodyParser = require("body-parser");
 const app = express();
 const PORT = 8443;
-
+const { handleEvent } = require('./src/telebot')
 // * Body Parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -140,19 +140,9 @@ app.post("/webhook", async (req, res) => {
           const user_name = `${
             message.from.first_name ? message.from.first_name : ""
           } ${message.from.last_name ? message.from.last_name : ""}`.trim();
-          // const data = {
-          //   chat_id: `@${message.chat.username}`,
-          //   text: `Dìa dia <i><b>${user_name}</b></i> 🤘🤘🤘!!!`,
-          //   parse_mode: "HTML",
-          //   reply_markup: {
-          //     inline_keyboard: [
-          //       [ { text: "Ventory", url: "https://testnet.ventory.gg/" }, { text: "Grinding", url: "https://grinding.today/" } ],
-          //       [ { text: "Callback 1", callback_data: 'btn-1' }, { text: "Callback 2", callback_data: 'btn-2'} ],
-          //   ]
-          //   }
-          // };
   
           await bot.sendMessage(message.chat.id, `Dìa dia <i><b>${user_name}</b></i> 🤘🤘🤘!!!`, {parse_mode: "HTML"});
+          await handleEvent(bot)
         }
       }
     }
