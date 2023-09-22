@@ -146,7 +146,7 @@ app.post("/webhook", async (req, res) => {
       // }
     }
   
-    bot.onText('/summon', async (msg, match) => {
+    if (message.text === '/summon') {
       const markup = {
         inline_keyboard: [
           [
@@ -166,7 +166,7 @@ app.post("/webhook", async (req, res) => {
       await bot.sendMessage(msg.chat.id, 'Ây dô đứa nào gọi tao?', {
         reply_markup: markup
       });
-    });
+    }
     
     bot.on('callback_query', async (callbackQuery) => {
       // Get the callback_data
