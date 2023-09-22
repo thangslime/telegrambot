@@ -103,43 +103,21 @@ app.get("/", (req, res) => {
 
 app.post("/webhook", async (req, res) => {
   try {
-    const body = req.body.message;
+    const body = req.body;
     console.log(body);
-    if (body.new_chat_member) {
-      const newMember = body.new_chat_member;
-      const user_name = `${newMember.first_name ? newMember.first_name : ""} ${
-        newMember.last_name ? newMember.last_name : ""
-      }`.trim();
-      const data = {
-        chat_id: `@${body.chat.username}`,
-        text: `Hi <i><b>${user_name}</b></i>,\nChào mừng bạn đến với <strong>${body.chat.title}</strong>.\nChúc bạn may mắn.`,
-        parse_mode: "HTML",
-      };
-
-      await axios.post(
-        `https://api.telegram.org/bot${
-          process.env.BOT_APIKEY ||
-          "6468513372:AAFVyJWK7R0lQ5CkYGPf0-t_hAR_qgjOF1o"
-        }/sendMessage`,
-        data
-      );
-    } else {
-      if (body.chat.type != "private") {
-        const user_name = `${
-          body.from.first_name ? body.from.first_name : ""
-        } ${body.from.last_name ? body.from.last_name : ""}`.trim();
+    const message = body.message || null
+    if (message) {
+      if (message.new_chat_member) {
+        const newMember = message.new_chat_member;
+        const user_name = `${newMember.first_name ? newMember.first_name : ""} ${
+          newMember.last_name ? newMember.last_name : ""
+        }`.trim();
         const data = {
-          chat_id: `@${body.chat.username}`,
-          text: `Dìa dia <i><b>${user_name}</b></i> 🤘🤘🤘!!!`,
+          chat_id: `@${message.chat.username}`,
+          text: `Hi <i><b>${user_name}</b></i>,\nChào mừng bạn đến với <strong>${message.chat.title}</strong>.\nChúc bạn may mắn.`,
           parse_mode: "HTML",
-          reply_markup: {
-            inline_keyboard: [
-              [ { text: "Ventory", url: "https://testnet.ventory.gg/" }, { text: "Grinding", url: "https://grinding.today/" } ],
-              [ { text: "Callback 1", callback_data: 'btn-1' }, { text: "Callback 2", callback_data: 'btn-2'} ],
-          ]
-          }
         };
-
+  
         await axios.post(
           `https://api.telegram.org/bot${
             process.env.BOT_APIKEY ||
@@ -147,8 +125,34 @@ app.post("/webhook", async (req, res) => {
           }/sendMessage`,
           data
         );
+      } else {
+        if (message.chat.type != "private") {
+          const user_name = `${
+            message.from.first_name ? message.from.first_name : ""
+          } ${message.from.last_name ? message.from.last_name : ""}`.trim();
+          const data = {
+            chat_id: `@${message.chat.username}`,
+            text: `Dìa dia <i><b>${user_name}</b></i> 🤘🤘🤘!!!`,
+            parse_mode: "HTML",
+            reply_markup: {
+              inline_keyboard: [
+                [ { text: "Ventory", url: "https://testnet.ventory.gg/" }, { text: "Grinding", url: "https://grinding.today/" } ],
+                [ { text: "Callback 1", callback_data: 'btn-1' }, { text: "Callback 2", callback_data: 'btn-2'} ],
+            ]
+            }
+          };
+  
+          await axios.post(
+            `https://api.telegram.org/bot${
+              process.env.BOT_APIKEY ||
+              "6468513372:AAFVyJWK7R0lQ5CkYGPf0-t_hAR_qgjOF1o"
+            }/sendMessage`,
+            data
+          );
+        }
       }
     }
+  
     res.status(200).json({ success: true, dataBody: req.body });
   } catch (error) {
     console.log(error);
