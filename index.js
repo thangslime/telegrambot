@@ -142,7 +142,6 @@ app.post("/webhook", async (req, res) => {
           } ${message.from.last_name ? message.from.last_name : ""}`.trim();
   
           await bot.sendMessage(message.chat.id, `Dìa dia <i><b>${user_name}</b></i> 🤘🤘🤘!!!`, {parse_mode: "HTML"});
-          await handleEvent(bot)
         }
       // }
     }
@@ -152,6 +151,8 @@ app.post("/webhook", async (req, res) => {
     console.log(error);
   }
 });
+
+handleEvent(bot)
 
 app.listen(PORT, () => {
   console.log(`API listening on PORT ${PORT} `);
