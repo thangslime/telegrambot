@@ -146,49 +146,49 @@ app.post("/webhook", async (req, res) => {
       // }
     }
   
+    bot.onText('/summon', async (msg, match) => {
+      const markup = {
+        'inlineKeyboard': [
+          [
+            {
+              'text': 'Cần hỗ trợ',
+              'callback_data': 'support'
+            },
+            {
+              'text': 'Không có gì',
+              'callback_data': 'nothing'
+            }
+          ]
+        ]
+      };
+    
+      // Send a message with the inline markup
+      await bot.sendMessage(msg.chat.id, 'Ây dô đứa nào gọi tao?', {
+        'replyMarkup': markup
+      });
+    });
+    
+    bot.on('callback_query', async (callbackQuery) => {
+      // Get the callback_data
+      const data = JSON.parse(callbackQuery.data);
+      const opts = {
+        chat_id: callbackQuery.message.chat.id,
+      };
+      switch (data.command) {
+        case 'support':
+          await bot.sendMessage(opts.chat_id, `Hỏi google đê`);
+          break;
+        case 'nothing':
+          await bot.sendMessage(opts.chat_id, `Cút cút`);
+          break;
+        default:
+            break;
+      }
+    });
+
     res.status(200).json({ success: true, dataBody: req.body });
   } catch (error) {
     console.log(error);
-  }
-});
-
-bot.onText('/summon', async (msg, match) => {
-  const markup = {
-    'inlineKeyboard': [
-      [
-        {
-          'text': 'Cần hỗ trợ',
-          'callback_data': 'support'
-        },
-        {
-          'text': 'Không có gì',
-          'callback_data': 'nothing'
-        }
-      ]
-    ]
-  };
-
-  // Send a message with the inline markup
-  await bot.sendMessage(msg.chat.id, 'Ây dô đứa nào gọi tao?', {
-    'replyMarkup': markup
-  });
-});
-
-bot.on('callback_query', async (callbackQuery) => {
-  // Get the callback_data
-  const data = JSON.parse(callbackQuery.data);
-  const opts = {
-    chat_id: callbackQuery.message.chat.id,
-  };
-  switch (data.command) {
-    case 'support':
-      await bot.sendMessage(opts.chat_id, `Hỏi google đê`);
-      break;
-    case 'nothing':
-      await bot.sendMessage(opts.chat_id, `Cút cút`);
-      break;
-    default:
-        break;
   }
 });
 
