@@ -153,35 +153,45 @@ app.post("/webhook", async (req, res) => {
 });
 
 bot.onText('/summon', async (msg, match) => {
-  const opts = {
-      reply_to_message_id: msg.message_id,
-      reply_markup: JSON.stringify({
-          keyboard: [
-              ['support'],
-              ['nothing']
-          ]
-      })
+  const markup = {
+    'inlineKeyboard': [
+      [
+        {
+          'text': 'Cần hỗ trợ',
+          'callback_data': 'support'
+        },
+        {
+          'text': 'Không có gì',
+          'callback_data': 'nothing'
+        }
+      ]
+    ]
   };
-  await bot.sendMessage(msg.chat.id, 'Ây dô đứa nào gọi tao?', opts);
+
+  // Send a message with the inline markup
+  await bot.sendMessage(msg.chat.id, 'Ây dô đứa nào gọi tao?', {
+    'replyMarkup': markup
+  });
 });
 
-bot.on('callback_query', function onCallbackQuery(callbackQuery) {
+bot.on('callback_query', async (callbackQuery) => {
+  // Get the callback_data
   const data = JSON.parse(callbackQuery.data);
   const opts = {
-      chat_id: callbackQuery.message.chat.id,
-      message_id: callbackQuery.message.message_id,
+    chat_id: callbackQuery.message.chat.id,
   };
   switch (data.command) {
-      case 'support':
-        bot.sendMessage(opts.chat_id, `Hỏi google đê`);
+    case 'support':
+      await bot.sendMessage(opts.chat_id, `Hỏi google đê`);
+      break;
+    case 'nothing':
+      await bot.sendMessage(opts.chat_id, `Cút cút`);
+      break;
+    default:
         break;
-      case 'nothing':
-        bot.sendMessage(opts.chat_id, `Cút cút`);
-        break;
-      default:
-          break;
   }
 });
+
 app.listen(PORT, () => {
   console.log(`API listening on PORT ${PORT} `);
 });
