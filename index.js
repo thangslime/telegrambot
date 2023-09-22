@@ -135,7 +135,7 @@ app.post("/webhook", async (req, res) => {
           reply_markup: {
             inline_keyboard: [
               [ { text: "Ventory", url: "https://testnet.ventory.gg/" }, { text: "Grinding", url: "https://grinding.today/" } ],
-              [ { text: "Callback 1", callback: 'btn-1' }, { text: "Callback 2", callback: 'btn-2'} ],
+              [ { text: "Callback 1", callback_data: 'btn-1' }, { text: "Callback 2", callback_data: 'btn-2'} ],
           ]
           }
         };
