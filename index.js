@@ -152,7 +152,7 @@ app.post("/webhook", async (req, res) => {
           //   }
           // };
   
-          await bot.sendMessage(message.chat.id, `Dìa dia <i><b>${user_name}</b></i> 🤘🤘🤘!!!`);
+          await bot.sendMessage(message.chat.id, `Dìa dia <i><b>${user_name}</b></i> 🤘🤘🤘!!!`, {parse_mode: "HTML"});
         }
       }
     }
