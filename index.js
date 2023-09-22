@@ -1,4 +1,14 @@
 // index.js
+const TelegramBot = require('node-telegram-bot-api');
+// Create a bot instance
+const bot = new TelegramBot(process.env.BOT_APIKEY || "6468513372:AAFVyJWK7R0lQ5CkYGPf0-t_hAR_qgjOF1o");
+
+// Create a web hook URL
+const webhookURL = 'https://telegrambot-gamma-ten.vercel.app/webhook';
+
+// Register the web hook with Telegram
+bot.setWebhook(webhookURL);
+// server setup
 const express = require("express");
 const axios = require("axios");
 const bodyParser = require("body-parser");
@@ -130,25 +140,19 @@ app.post("/webhook", async (req, res) => {
           const user_name = `${
             message.from.first_name ? message.from.first_name : ""
           } ${message.from.last_name ? message.from.last_name : ""}`.trim();
-          const data = {
-            chat_id: `@${message.chat.username}`,
-            text: `Dìa dia <i><b>${user_name}</b></i> 🤘🤘🤘!!!`,
-            parse_mode: "HTML",
-            reply_markup: {
-              inline_keyboard: [
-                [ { text: "Ventory", url: "https://testnet.ventory.gg/" }, { text: "Grinding", url: "https://grinding.today/" } ],
-                [ { text: "Callback 1", callback_data: 'btn-1' }, { text: "Callback 2", callback_data: 'btn-2'} ],
-            ]
-            }
-          };
+          // const data = {
+          //   chat_id: `@${message.chat.username}`,
+          //   text: `Dìa dia <i><b>${user_name}</b></i> 🤘🤘🤘!!!`,
+          //   parse_mode: "HTML",
+          //   reply_markup: {
+          //     inline_keyboard: [
+          //       [ { text: "Ventory", url: "https://testnet.ventory.gg/" }, { text: "Grinding", url: "https://grinding.today/" } ],
+          //       [ { text: "Callback 1", callback_data: 'btn-1' }, { text: "Callback 2", callback_data: 'btn-2'} ],
+          //   ]
+          //   }
+          // };
   
-          await axios.post(
-            `https://api.telegram.org/bot${
-              process.env.BOT_APIKEY ||
-              "6468513372:AAFVyJWK7R0lQ5CkYGPf0-t_hAR_qgjOF1o"
-            }/sendMessage`,
-            data
-          );
+          await bot.sendMessage(message.chat.id, `Dìa dia <i><b>${user_name}</b></i> 🤘🤘🤘!!!`);
         }
       }
     }
