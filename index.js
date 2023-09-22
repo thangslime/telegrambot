@@ -148,15 +148,15 @@ app.post("/webhook", async (req, res) => {
   
     bot.onText('/summon', async (msg, match) => {
       const markup = {
-        'inlineKeyboard': [
+        inline_keyboard: [
           [
             {
-              'text': 'Cần hỗ trợ',
-              'callback_data': 'support'
+              text: 'Cần hỗ trợ',
+              callback_data: 'support'
             },
             {
-              'text': 'Không có gì',
-              'callback_data': 'nothing'
+              text: 'Không có gì',
+              callback_data: 'nothing'
             }
           ]
         ]
@@ -164,7 +164,7 @@ app.post("/webhook", async (req, res) => {
     
       // Send a message with the inline markup
       await bot.sendMessage(msg.chat.id, 'Ây dô đứa nào gọi tao?', {
-        'replyMarkup': markup
+        reply_markup: markup
       });
     });
     
