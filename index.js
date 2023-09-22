@@ -174,7 +174,7 @@ app.post("/webhook", async (req, res) => {
       const opts = {
         chat_id: callbackQuery.message.chat.id,
       };
-      switch (data.command) {
+      switch (data.callback_query.data) {
         case 'support':
           await bot.sendMessage(opts.chat_id, `Hỏi google đê`);
           break;
