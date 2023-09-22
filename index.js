@@ -165,7 +165,7 @@ bot.onText(/\/summon/, async (msg, match) => {
   await bot.sendMessage(msg.chat.id, 'Ây dô đứa nào gọi tao?', opts);
 });
 
-bot.on('callback_query', async function onCallbackQuery(callbackQuery) {
+bot.on('callback_query', function onCallbackQuery(callbackQuery) {
   const data = JSON.parse(callbackQuery.data);
   const opts = {
       chat_id: callbackQuery.message.chat.id,
@@ -173,19 +173,13 @@ bot.on('callback_query', async function onCallbackQuery(callbackQuery) {
   };
   switch (data.command) {
       case 'support':
-          
-          break;
-      case value:
-          
-          break;
+        bot.sendMessage(opts.chat_id, `Hỏi google đê`);
+        break;
+      case 'nothing':
+        bot.sendMessage(opts.chat_id, `Cút cút`);
+        break;
       default:
           break;
-  }
-  if (data.command === 'support') {
-      await bot.sendMessage(opts.chat_id, `Hỏi google đê`);
-  }
-  if (data.command === 'nothing') {
-      await bot.sendMessage(opts.chat_id, `Cút cút`);
   }
 });
 app.listen(PORT, () => {
