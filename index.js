@@ -1,7 +1,7 @@
 // index.js
 const TelegramBot = require('node-telegram-bot-api');
 // Create a bot instance
-const bot = new TelegramBot(process.env.BOT_APIKEY || "6468513372:AAFVyJWK7R0lQ5CkYGPf0-t_hAR_qgjOF1o");
+const bot = new TelegramBot(process.env.BOT_APIKEY || "6468513372:AAFVyJWK7R0lQ5CkYGPf0-t_hAR_qgjOF1o", {polling: true});
 
 // Create a web hook URL
 const webhookURL = 'https://telegrambot-gamma-ten.vercel.app/webhook';
@@ -174,17 +174,17 @@ app.post("/webhook", async (req, res) => {
   }
 });
 
-bot.on('callback_query', async (callbackQuery) => {
+bot.on('callback_query', (callbackQuery) => {
   // Get the callback_data
   const opts = {
     chat_id: callbackQuery.message.chat.id,
   };
   switch (callbackQuery.data) {
     case 'support':
-      await bot.sendMessage(opts.chat_id, `Hỏi google đê`);
+      bot.sendMessage(opts.chat_id, `Hỏi google đê`);
       break;
     case 'nothing':
-      await bot.sendMessage(opts.chat_id, `Cút cút`);
+      bot.sendMessage(opts.chat_id, `Cút cút`);
       break;
     default:
         break;
