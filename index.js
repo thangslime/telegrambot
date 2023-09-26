@@ -167,7 +167,7 @@ app.post("/webhook", async (req, res) => {
       }
     }
     if (body.callback_query) {
-      switch (body.data) {
+      switch (body.callback_query.data) {
         case 'support':
           await bot.sendMessage(message.chat_id, `Hỏi google đê`);
           break;
