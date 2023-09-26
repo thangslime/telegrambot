@@ -7,7 +7,7 @@ const bot = new TelegramBot(process.env.BOT_APIKEY || "6468513372:AAFVyJWK7R0lQ5
 const webhookURL = 'https://telegrambot-gamma-ten.vercel.app/webhook';
 
 // Register the web hook with Telegram
-bot.setWebHook(webhookURL);
+// bot.setWebHook(webhookURL);
 // server setup
 const express = require("express");
 const axios = require("axios");
@@ -171,6 +171,32 @@ app.post("/webhook", async (req, res) => {
     res.status(200).json({ success: true, dataBody: req.body });
   } catch (error) {
     console.log(error);
+  }
+});
+
+bot.on('message', (message) => {
+  if (message.text === '/summon') {
+    const markup = {
+      inline_keyboard: [
+        [
+          {
+            text: 'Cần hỗ trợ',
+            callback_data: 'support'
+          },
+          {
+            text: 'Không có gì',
+            callback_data: 'nothing'
+          }
+        ]
+      ]
+    };
+  
+    // Send a message with the inline markup
+    bot.sendMessage(message.chat.id, 'Ây dô đứa nào gọi tao?', {
+      reply_markup: markup
+    });
+  } else {
+    bot.sendMessage(message.chat.id, `Dìa dia <i><b>${user_name}</b></i> 🤘🤘🤘!!!`, {parse_mode: "HTML"});
   }
 });
 
