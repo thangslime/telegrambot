@@ -167,27 +167,27 @@ app.post("/webhook", async (req, res) => {
         reply_markup: markup
       });
     }
-    
-    bot.on('callback_query', async (callbackQuery) => {
-      // Get the callback_data
-      const opts = {
-        chat_id: callbackQuery.message.chat.id,
-      };
-      switch (callbackQuery.data) {
-        case 'support':
-          await bot.sendMessage(opts.chat_id, `Hỏi google đê`);
-          break;
-        case 'nothing':
-          await bot.sendMessage(opts.chat_id, `Cút cút`);
-          break;
-        default:
-            break;
-      }
-    });
 
     res.status(200).json({ success: true, dataBody: req.body });
   } catch (error) {
     console.log(error);
+  }
+});
+
+bot.on('callback_query', async (callbackQuery) => {
+  // Get the callback_data
+  const opts = {
+    chat_id: callbackQuery.message.chat.id,
+  };
+  switch (callbackQuery.data) {
+    case 'support':
+      await bot.sendMessage(opts.chat_id, `Hỏi google đê`);
+      break;
+    case 'nothing':
+      await bot.sendMessage(opts.chat_id, `Cút cút`);
+      break;
+    default:
+        break;
   }
 });
 
