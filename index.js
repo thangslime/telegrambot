@@ -166,7 +166,18 @@ app.post("/webhook", async (req, res) => {
         });
       }
     }
-  
+    if (body.callback_query) {
+      switch (body.data) {
+        case 'support':
+          await bot.sendMessage(message.chat_id, `Hỏi google đê`);
+          break;
+        case 'nothing':
+          await bot.sendMessage(message.chat_id, `Cút cút`);
+          break;
+        default:
+            break;
+      }
+    }
     res.status(200).json({ success: true, dataBody: req.body });
   } catch (error) {
     console.log(error);
