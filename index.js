@@ -194,7 +194,7 @@ bot.on('message', (message) => {
     };
   
     // Send a message with the inline markup
-    bot.sendMessage(message.chat.id, 'Ây dô đứa nào gọi tao?', {
+    message.reply('Ây dô đứa nào gọi tao?', {
       reply_markup: markup
     });
   } else {
