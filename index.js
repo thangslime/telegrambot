@@ -1,13 +1,13 @@
 // index.js
-const { Telegraf } = require('telegraf');
+const TelegramBot = require('node-telegram-bot-api');
 // Create a bot instance
-const bot = new Telegraf(process.env.BOT_APIKEY || "6468513372:AAFVyJWK7R0lQ5CkYGPf0-t_hAR_qgjOF1o");
+const bot = new TelegramBot(process.env.BOT_APIKEY || "6468513372:AAFVyJWK7R0lQ5CkYGPf0-t_hAR_qgjOF1o");
 
 // Create a web hook URL
 const webhookURL = 'https://telegrambot-gamma-ten.vercel.app/webhook';
 
 // Register the web hook with Telegram
-// bot.setWebHook(webhookURL);
+bot.setWebHook(webhookURL);
 // server setup
 const express = require("express");
 const axios = require("axios");
@@ -111,14 +111,31 @@ app.get("/", (req, res) => {
   </html>`);
 });
 
-bot.launch()
-
 app.post("/webhook", async (req, res) => {
   try {
     const body = req.body;
     console.log(body);
     const message = body.message || null
     if (message) {
+      // if (message.new_chat_member) {
+      //   const newMember = message.new_chat_member;
+      //   const user_name = `${newMember.first_name ? newMember.first_name : ""} ${
+      //     newMember.last_name ? newMember.last_name : ""
+      //   }`.trim();
+      //   const data = {
+      //     chat_id: `@${message.chat.username}`,
+      //     text: `Hi <i><b>${user_name}</b></i>,\nChào mừng bạn đến với <strong>${message.chat.title}</strong>.\nChúc bạn một ngày đầy may mắn.`,
+      //     parse_mode: "HTML",
+      //   };
+  
+      //   await axios.post(
+      //     `https://api.telegram.org/bot${
+      //       process.env.BOT_APIKEY ||
+      //       "6468513372:AAFVyJWK7R0lQ5CkYGPf0-t_hAR_qgjOF1o"
+      //     }/sendMessage`,
+      //     data
+      //   );
+      // } else {
         if (message.chat.type != "private") {
           const user_name = `${
             message.from.first_name ? message.from.first_name : ""
@@ -126,6 +143,7 @@ app.post("/webhook", async (req, res) => {
   
           await bot.sendMessage(message.chat.id, `Dìa dia <i><b>${user_name}</b></i> 🤘🤘🤘!!!`, {parse_mode: "HTML"});
         }
+      // }
     }
   
     if (message.text === '/summon') {
@@ -149,53 +167,27 @@ app.post("/webhook", async (req, res) => {
         reply_markup: markup
       });
     }
+    
+    bot.on('callback_query', async (callbackQuery) => {
+      // Get the callback_data
+      const opts = {
+        chat_id: callbackQuery.message.chat.id,
+      };
+      switch (callbackQuery.data) {
+        case 'support':
+          await bot.sendMessage(opts.chat_id, `Hỏi google đê`);
+          break;
+        case 'nothing':
+          await bot.sendMessage(opts.chat_id, `Cút cút`);
+          break;
+        default:
+            break;
+      }
+    });
 
     res.status(200).json({ success: true, dataBody: req.body });
   } catch (error) {
     console.log(error);
-  }
-});
-
-bot.on('message', (message) => {
-  if (message.text === '/summon') {
-    const markup = {
-      inline_keyboard: [
-        [
-          {
-            text: 'Cần hỗ trợ',
-            callback_data: 'support'
-          },
-          {
-            text: 'Không có gì',
-            callback_data: 'nothing'
-          }
-        ]
-      ]
-    };
-  
-    // Send a message with the inline markup
-    message.reply('Ây dô đứa nào gọi tao?', {
-      reply_markup: markup
-    });
-  } else {
-    message.reply(message.chat.id, `Dìa dia <i><b>${user_name}</b></i> 🤘🤘🤘!!!`, {parse_mode: "HTML"});
-  }
-});
-
-bot.on('callback_query', (callbackQuery) => {
-  // Get the callback_data
-  const opts = {
-    chat_id: callbackQuery.message.chat.id,
-  };
-  switch (callbackQuery.data) {
-    case 'support':
-      callbackQuery.reply(`Hỏi google đê`);
-      break;
-    case 'nothing':
-      callbackQuery.reply(`Cút cút`);
-      break;
-    default:
-        break;
   }
 });
 
