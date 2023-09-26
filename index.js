@@ -169,10 +169,10 @@ app.post("/webhook", async (req, res) => {
     if (body.callback_query) {
       switch (body.callback_query.data) {
         case 'support':
-          await bot.sendMessage(message.chat_id, `Hỏi google đê`);
+          await bot.sendMessage(body.callback_query.message.chat.id, `Hỏi google đê`);
           break;
         case 'nothing':
-          await bot.sendMessage(message.chat_id, `Cút cút`);
+          await bot.sendMessage(body.callback_query.message.chat.id, `Cút cút`);
           break;
         default:
             break;
