@@ -212,7 +212,6 @@ bot.on('callback_query', callbackQuery => {
   const opts = {
     chat_id: callbackQuery.message.chat.id,
   };
-  bot.sendMessage(opts.chat_id, `vào dc nè`);
   switch (callbackQuery.data) {
     case 'support':
       bot.sendMessage(opts.chat_id, `Hỏi google đê`);
@@ -225,7 +224,4 @@ bot.on('callback_query', callbackQuery => {
   }
 });
 
-bot.on('message', msg => {
-  bot.sendMessage(msg.chat.id, 'I am alive!');
-});
 module.exports = app;
