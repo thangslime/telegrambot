@@ -142,7 +142,7 @@ bot.on('callback_query', callbackQuery => {
   }
 });
 
-bot.onText('start', message => {
+bot.on('message', message => {
   const markup = {
     inline_keyboard: [
       [
