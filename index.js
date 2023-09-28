@@ -189,23 +189,6 @@ app.listen(PORT, () => {
   console.log(`API listening on PORT ${PORT} `);
 });
 // Export the Express API
-bot.on('callback_query', callbackQuery => {
-  // Get the callback_data
-  const opts = {
-    chat_id: callbackQuery.message.chat.id,
-  };
-  bot.sendMessage(opts.chat_id, `vào dc nè`);
-  switch (callbackQuery.data) {
-    case 'support':
-      bot.sendMessage(opts.chat_id, `Hỏi google đê`);
-      break;
-    case 'nothing':
-      bot.sendMessage(opts.chat_id, `Cút cút`);
-      break;
-    default:
-        break;
-  }
-});
 
 bot.on('callback_query', callbackQuery => {
   // Get the callback_data
