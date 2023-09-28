@@ -131,11 +131,11 @@ bot.on('callback_query', callbackQuery => {
     chat_id: callbackQuery.message.chat.id,
   };
   switch (callbackQuery.data) {
-    case 'support':
-      bot.sendMessage(opts.chat_id, `Hỏi google đê`);
+    case 'my_wallet':
+      bot.sendMessage(opts.chat_id, `Your wallet: 0x00...00`);
       break;
-    case 'nothing':
-      bot.sendMessage(opts.chat_id, `Cút cút`);
+    case 'deposit':
+      bot.sendMessage(opts.chat_id, `Comming Soon`);
       break;
     default:
         break;
