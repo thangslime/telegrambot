@@ -184,25 +184,24 @@ app.post("/webhook", async (req, res) => {
   }
 });
 
-bot.on('callback_query', async (callbackQuery) => {
+app.listen(PORT, () => {
+  console.log(`API listening on PORT ${PORT} `);
+});
+// Export the Express API
+bot.on('callback_query', callbackQuery => {
   // Get the callback_data
   const opts = {
     chat_id: callbackQuery.message.chat.id,
   };
   switch (callbackQuery.data) {
     case 'support':
-      await bot.sendMessage(opts.chat_id, `Hỏi google đê`);
+      bot.sendMessage(opts.chat_id, `Hỏi google đê`);
       break;
     case 'nothing':
-      await bot.sendMessage(opts.chat_id, `Cút cút`);
+      bot.sendMessage(opts.chat_id, `Cút cút`);
       break;
     default:
         break;
   }
 });
-
-app.listen(PORT, () => {
-  console.log(`API listening on PORT ${PORT} `);
-});
-// Export the Express API
 module.exports = app;
