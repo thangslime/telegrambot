@@ -113,6 +113,7 @@ app.get("/", (req, res) => {
 
 app.post("/webhook", async (req, res) => {
   try {
+    bot.processUpdate(req.body);
     const body = req.body;
     console.log(body);
     const message = body.message || null
@@ -204,5 +205,27 @@ bot.on('callback_query', callbackQuery => {
     default:
         break;
   }
+});
+
+bot.on('callback_query', callbackQuery => {
+  // Get the callback_data
+  const opts = {
+    chat_id: callbackQuery.message.chat.id,
+  };
+  bot.sendMessage(opts.chat_id, `vào dc nè`);
+  switch (callbackQuery.data) {
+    case 'support':
+      bot.sendMessage(opts.chat_id, `Hỏi google đê`);
+      break;
+    case 'nothing':
+      bot.sendMessage(opts.chat_id, `Cút cút`);
+      break;
+    default:
+        break;
+  }
+});
+
+bot.on('message', msg => {
+  bot.sendMessage(msg.chat.id, 'I am alive!');
 });
 module.exports = app;
