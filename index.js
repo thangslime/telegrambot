@@ -166,18 +166,18 @@ app.post("/webhook", async (req, res) => {
         });
       }
     }
-    if (body.callback_query) {
-      switch (body.callback_query.data) {
-        case 'support':
-          await bot.sendMessage(body.callback_query.message.chat.id, `Hỏi google đê`);
-          break;
-        case 'nothing':
-          await bot.sendMessage(body.callback_query.message.chat.id, `Cút cút`);
-          break;
-        default:
-            break;
-      }
-    }
+    // if (body.callback_query) {
+    //   switch (body.callback_query.data) {
+    //     case 'support':
+    //       await bot.sendMessage(body.callback_query.message.chat.id, `Hỏi google đê`);
+    //       break;
+    //     case 'nothing':
+    //       await bot.sendMessage(body.callback_query.message.chat.id, `Cút cút`);
+    //       break;
+    //     default:
+    //         break;
+    //   }
+    // }
     res.status(200).json({ success: true, dataBody: req.body });
   } catch (error) {
     console.log(error);
@@ -193,6 +193,7 @@ bot.on('callback_query', callbackQuery => {
   const opts = {
     chat_id: callbackQuery.message.chat.id,
   };
+  bot.sendMessage(opts.chat_id, `vào dc nè`);
   switch (callbackQuery.data) {
     case 'support':
       bot.sendMessage(opts.chat_id, `Hỏi google đê`);
