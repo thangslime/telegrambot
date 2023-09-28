@@ -1,7 +1,7 @@
 // index.js
 const TelegramBot = require('node-telegram-bot-api');
 // Create a bot instance
-const bot = new TelegramBot(process.env.BOT_APIKEY || "6468513372:AAFVyJWK7R0lQ5CkYGPf0-t_hAR_qgjOF1o");
+const bot = new TelegramBot(process.env.BOT_APIKEY || "6468513372:AAFVyJWK7R0lQ5CkYGPf0-t_hAR_qgjOF1o", {polling: true});
 
 // Create a web hook URL
 const webhookURL = 'https://telegrambot-gamma-ten.vercel.app/webhook';
