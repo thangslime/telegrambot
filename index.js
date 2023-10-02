@@ -189,9 +189,9 @@ bot.onText(/\/start/, async message => {
   });
 });
 
-bot.on('message', async message => {
+bot.on('message', message => {
   if (message.text.includes('Private Key')) {
-    await importWallet(bot, message.chat.id, message)
+   importWallet(bot, message.chat.id, message)
   }
 });
 
