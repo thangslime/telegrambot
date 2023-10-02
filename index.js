@@ -14,7 +14,7 @@ const axios = require("axios");
 const bodyParser = require("body-parser");
 const app = express();
 const PORT = 8443;
-const { handleEvent } = require('./src/telebot')
+const { myWallet } = require('./src/telebot')
 // * Body Parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -131,12 +131,33 @@ bot.on('callback_query', callbackQuery => {
     chat_id: callbackQuery.message.chat.id,
   };
   switch (callbackQuery.data) {
-    case 'my_wallet':
-      bot.sendMessage(opts.chat_id, `Your wallet: 0x00...00`);
+    case 'my_wallet':{
+      myWallet(bot)
       break;
+    }
     case 'deposit':
       bot.sendMessage(opts.chat_id, `Comming Soon`);
       break;
+    case 'menu': {
+      const markup = {
+        inline_keyboard: [
+          [
+            {
+              text: '💳 My Wallet',
+              callback_data: 'my_wallet'
+            },
+            {
+              text: '📥 Deposit',
+              callback_data: 'deposit'
+            }
+          ]
+        ]
+      };
+      bot.sendMessage(message.chat.id, 'You are in Main Menu', {
+        reply_markup: markup
+      });
+      break;
+    }
     default:
         break;
   }
