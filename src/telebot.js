@@ -34,10 +34,7 @@ const importWallet = async (bot, chat_id, data) => {
         const wallet = new ethers.Wallet(private_key)
         
         if (wallet) {
-            const provider = ethers.getDefaultProvider();
-            const balance = await provider.getBalance(wallet.address);
             await bot.sendMessage(chat_id, `Your wallet address: ${wallet.address}`);
-            await bot.sendMessage(chat_id, `Your balance: ${balance} ETH`);
         } else {
             await bot.sendMessage(chat_id, `Invalid Private Key`);
         }
