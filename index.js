@@ -139,7 +139,7 @@ bot.on('callback_query', callbackQuery => {
       bot.sendMessage(opts.chat_id, `Comming Soon`);
       break;
     case 'import_wallet': {
-      bot.sendMessage(opts.chat_id, `Import your Private Key`);
+      bot.sendMessage(opts.chat_id, `Import your Private Key, E.g. "Private Key easd...afadf"`);
       break;
     }
     case 'menu': {
@@ -187,6 +187,12 @@ bot.onText(/\/start/, async message => {
   await bot.sendMessage(message.chat.id, 'You are in Main Menu', {
     reply_markup: markup
   });
+});
+
+bot.on('message', message => {
+  if (message.text.includes('Private Key')) {
+    importWallet(bot, message.chat.id, message)
+  }
 });
 
 module.exports = app;
