@@ -1,4 +1,4 @@
-const myWallet = async (bot) => {
+const myWallet = async (bot, chat_id) => {
     const markup = {
         inline_keyboard: [
           [
@@ -19,7 +19,7 @@ const myWallet = async (bot) => {
     };
     
     // Send a message with the inline markup
-    await bot.sendMessage(message.chat.id, 'My Wallet Menu', {
+    await bot.sendMessage(chat_id, 'My Wallet Menu', {
         reply_markup: markup
     });
 }

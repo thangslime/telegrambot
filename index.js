@@ -132,7 +132,7 @@ bot.on('callback_query', callbackQuery => {
   };
   switch (callbackQuery.data) {
     case 'my_wallet':{
-      myWallet(bot)
+      myWallet(bot, opts.chat_id)
       break;
     }
     case 'deposit':
@@ -153,7 +153,7 @@ bot.on('callback_query', callbackQuery => {
           ]
         ]
       };
-      bot.sendMessage(message.chat.id, 'You are in Main Menu', {
+      bot.sendMessage(opts.chat_id, 'You are in Main Menu', {
         reply_markup: markup
       });
       break;
