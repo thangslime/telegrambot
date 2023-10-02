@@ -139,7 +139,7 @@ bot.on('callback_query', callbackQuery => {
       bot.sendMessage(opts.chat_id, `Comming Soon`);
       break;
     case 'import_wallet': {
-      importWallet(bot, opts.chat_id, callbackQuery)
+      bot.sendMessage(opts.chat_id, `Import your Private Key`);
       break;
     }
     case 'menu': {
