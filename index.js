@@ -14,7 +14,7 @@ const axios = require("axios");
 const bodyParser = require("body-parser");
 const app = express();
 const PORT = 8443;
-const { myWallet } = require('./src/telebot')
+const { myWallet, importWallet } = require('./src/telebot')
 // * Body Parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -138,6 +138,10 @@ bot.on('callback_query', callbackQuery => {
     case 'deposit':
       bot.sendMessage(opts.chat_id, `Comming Soon`);
       break;
+    case 'import_wallet': {
+      importWallet(bot, opts.chat_id, callbackQuery)
+      break;
+    }
     case 'menu': {
       const markup = {
         inline_keyboard: [
