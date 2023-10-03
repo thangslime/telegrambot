@@ -121,6 +121,19 @@ app.post("/webhook", (req, res) => {
   }
 });
 
+app.get("/get-balance", async (req, res) => {
+  try {
+    const wallet_address = '0xB1389500b55ea7388A214c169E9800A2c58a6361'
+    const provider = new ethers.providers.JsonRpcProvider('https://ethereum.publicnode.com');
+
+    const balance = await provider.getBalance(wallet_address);
+
+    res.status(200).json({ success: true, dataBody: ethers.utils.formatEther(balance) });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`API listening on PORT ${PORT} `);
 });
