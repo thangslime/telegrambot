@@ -114,7 +114,6 @@ app.get("/", (req, res) => {
 
 app.post("/webhook", (req, res) => {
   try {
-    res.status(200).json({ success: true, dataBody: req.body });
     bot.processUpdate(req.body);
   } catch (error) {
     console.log(error);
