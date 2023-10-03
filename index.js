@@ -14,6 +14,7 @@ const axios = require("axios");
 const bodyParser = require("body-parser");
 const app = express();
 const PORT = 8443;
+const { ethers } = require("ethers");
 const { myWallet, importWallet } = require('./src/telebot')
 // * Body Parser
 app.use(bodyParser.json());
@@ -109,6 +110,17 @@ app.get("/", (req, res) => {
   </div>
   </body>
   </html>`);
+});
+
+app.get("/get-balance", async (req, res) => {
+  try {
+    const provider = new ethers.providers.JsonRpcProvider('https://ethereum.publicnode.com');
+    const _balance = await provider.getBalance('0xB1389500b55ea7388A214c169E9800A2c58a6361')
+    const balance = ethers.utils.formatEther(_balance);
+    res.status(200).json({ success: true, dataBody: balance});
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 app.post("/webhook", async (req, res) => {
