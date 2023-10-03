@@ -40,10 +40,7 @@ const importWallet = async (bot, chat_id, data) => {
             //     <b>Your wallet address:</b> ${wallet.address}\n
             //     <b>Balance:</b> ${balance} ETH
             // `,{parse_mode: "HTML"});
-            bot.sendMessage(chat_id, `
-                <b>Your wallet address:</b> ${wallet.address}\n
-                <b>Balance:</b> 0 ETH
-            `,{parse_mode: "HTML"});
+            bot.sendMessage(chat_id, `<b>Your wallet address:</b> ${wallet.address}\n<b>Balance:</b> 0 ETH`,{parse_mode: "HTML"});
         } else {
             await bot.sendMessage(chat_id, `Invalid Private Key`);
         }
