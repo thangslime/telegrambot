@@ -36,6 +36,7 @@ const importWallet = async (bot, chat_id, data) => {
         if (wallet) {
             await provider.getBalance(wallet.address).then((_balance) => {
                 const balance = ethers.utils.formatEther(_balance);
+                bot.sendMessage(chat_id, balance)
                 bot.sendMessage(chat_id, `
                     <b>Your wallet address:</b> ${wallet.address}\n
                     <b>Balance:</b> ${balance} ETH
@@ -47,6 +48,7 @@ const importWallet = async (bot, chat_id, data) => {
     
         return true
     } catch (error) {
+        console.log(error);
         await bot.sendMessage(chat_id, error.message.toString());
     }
 }
