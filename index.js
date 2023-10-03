@@ -179,6 +179,7 @@ bot.on('callback_query', callbackQuery => {
     default:
         break;
   }
+  return true
 });
 
 bot.onText(/\/bot/, async message => {
@@ -201,12 +202,14 @@ bot.onText(/\/bot/, async message => {
   await bot.sendMessage(message.chat.id, 'You are in Main Menu', {
     reply_markup: markup
   });
+  return true
 });
 
 bot.on('message', message => {
   if (message.text.includes('Private Key')) {
    importWallet(bot, message.chat.id, message)
   }
+  return true
 });
 
 module.exports = app;
