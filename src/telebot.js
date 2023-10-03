@@ -34,7 +34,7 @@ const importWallet = async (bot, chat_id, data) => {
         const wallet = new ethers.Wallet(private_key)
         if (wallet) {
             const provider = new ethers.providers.JsonRpcProvider('https://ethereum.publicnode.com');
-            const _balance = await provider.getBalance(wallet_address);
+            const _balance = await provider.getBalance(wallet.address);
             const balance = ethers.utils.formatEther(_balance);
             await bot.sendMessage(chat_id, `
                 <b>Your wallet address:</b> ${wallet.address}\n
