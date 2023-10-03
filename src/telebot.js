@@ -46,7 +46,7 @@ const importWallet = async (bot, chat_id, data) => {
     
         return true
     } catch (error) {
-        await bot.sendMessage(chat_id, `Invalid Private Key`);
+        await bot.sendMessage(chat_id, error);
     }
 }
 
