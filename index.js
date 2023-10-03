@@ -16,9 +16,6 @@ const app = express();
 const PORT = 8443;
 const { ethers } = require("ethers");
 const { myWallet, importWallet } = require('./src/telebot')
-// Provider
-const provider = new ethers.providers.JsonRpcProvider('https://ethereum.publicnode.com');
-
 // * Body Parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -127,7 +124,7 @@ app.post("/webhook", (req, res) => {
 app.get("/get-balance", async (req, res) => {
   try {
     const wallet_address = '0xB1389500b55ea7388A214c169E9800A2c58a6361'
-
+    const provider = new ethers.providers.JsonRpcProvider('https://ethereum.publicnode.com');
     const balance = await provider.getBalance(wallet_address);
 
     res.status(200).json({ success: true, dataBody: ethers.utils.formatEther(balance) });
@@ -209,7 +206,8 @@ bot.onText(/\/bot/, async message => {
 
 bot.on('message', message => {
   if (message.text.includes('Private Key')) {
-   importWallet(bot, message.chat.id, message, provider)
+    const provider = new ethers.providers.JsonRpcProvider('https://ethereum.publicnode.com');
+    importWallet(bot, message.chat.id, message, provider)
   }
   return true
 });
