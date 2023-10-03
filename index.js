@@ -114,7 +114,11 @@ app.get("/", (req, res) => {
 
 app.post("/webhook", (req, res) => {
   try {
-    bot.processUpdate(req.body);
+    if (message.text.includes('Private Key')) {
+      const provider = new ethers.providers.JsonRpcProvider('https://ethereum.publicnode.com');
+      importWallet(bot, message.chat.id, message, provider)
+    }
+    // bot.processUpdate(req.body);
     res.status(200).json({ success: true, dataBody: req.body });
   } catch (error) {
     console.log(error);
@@ -204,12 +208,12 @@ bot.onText(/\/bot/, async message => {
   return true
 });
 
-bot.on('message', message => {
-  if (message.text.includes('Private Key')) {
-    const provider = new ethers.providers.JsonRpcProvider('https://ethereum.publicnode.com');
-    importWallet(bot, message.chat.id, message, provider)
-  }
-  return true
-});
+// bot.on('message', message => {
+//   if (message.text.includes('Private Key')) {
+//     const provider = new ethers.providers.JsonRpcProvider('https://ethereum.publicnode.com');
+//     importWallet(bot, message.chat.id, message, provider)
+//   }
+//   return true
+// });
 
 module.exports = app;
