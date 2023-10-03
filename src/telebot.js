@@ -47,7 +47,7 @@ const importWallet = async (bot, chat_id, data) => {
         return true
     } catch (error) {
         console.log(error);
-        bot.sendMessage(chat_id, JSON.stringify(error));
+        bot.sendMessage(chat_id, error.message);
     }
 }
 
