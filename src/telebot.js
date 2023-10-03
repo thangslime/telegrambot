@@ -1,5 +1,4 @@
 const { ethers } = require("ethers");
-const provider = new ethers.providers.JsonRpcProvider('https://ethereum.publicnode.com');
 
 const myWallet = async (bot, chat_id) => {
     const markup = {
@@ -29,7 +28,7 @@ const myWallet = async (bot, chat_id) => {
     return true
 }
 
-const importWallet = async (bot, chat_id, data) => { 
+const importWallet = async (bot, chat_id, data, provider) => { 
     try {
         const private_key = data.text.slice(12)
         const wallet = new ethers.Wallet(private_key)
