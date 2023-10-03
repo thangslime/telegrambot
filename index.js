@@ -112,17 +112,6 @@ app.get("/", (req, res) => {
   </html>`);
 });
 
-app.get("/get-balance", async (req, res) => {
-  try {
-    const provider = new ethers.providers.JsonRpcProvider('https://ethereum.publicnode.com');
-    const _balance = await provider.getBalance('0xB1389500b55ea7388A214c169E9800A2c58a6361')
-    const balance = ethers.utils.formatEther(_balance);
-    res.status(200).json({ success: true, dataBody: balance});
-  } catch (error) {
-    console.log(error);
-  }
-});
-
 app.post("/webhook", async (req, res) => {
   try {
     await bot.processUpdate(req.body);
