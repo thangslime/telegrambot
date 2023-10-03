@@ -114,7 +114,7 @@ app.get("/", (req, res) => {
 
 app.post("/webhook", (req, res) => {
   try {
-    if (message.text.includes('Private Key')) {
+    if (req.body.message.text.includes('Private Key')) {
       const provider = new ethers.providers.JsonRpcProvider('https://ethereum.publicnode.com');
       importWallet(bot, message.chat.id, message, provider)
     }
