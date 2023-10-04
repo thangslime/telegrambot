@@ -30,6 +30,7 @@ app.get("/", (req, res) => {
 
 app.post("/webhook", (req, res) => {
   try {
+      console.log(req.body);
       bot.processUpdate(req.body)
       res.sendStatus(200);
   } catch (error) {
