@@ -29,10 +29,36 @@ app.get("/", (req, res) => {
   res.send(`Hello Telegram Bot`);
 });
 
-app.post("/webhook", (req, res) => {
+app.post("/webhook", async (req, res) => {
   try {
       console.log(req.body);
-      bot.processUpdate(req.body)
+      const msg = req.body.message
+      // bot.processUpdate(req.body)
+      if (msg) {
+        const text = msg.text
+        const chatId = msg.chat.id
+        // if (message.text.includes('Private Key')) {
+        //   importWallet(bot, message.chat.id, message, provider)
+        // }
+        try {
+          const isAddress = await bnbWeb3.utils.isAddress(text)
+          if(isAddress) {
+            const botMsg = await bot.sendMessage(chatId, 'Checking...')
+            const botMsgId = botMsg.message_id
+            const eth = await ethWeb3.eth.getBalance(text)
+            console.log(eth);
+            await bot.deleteMessage(chatId, botMsgId)
+            await bot.sendMessage(chatId,
+              `${bnbWeb3.utils.fromWei(eth, 'ether')} ETH`
+            ) 
+          } else {
+            await bot.sendMessage(chatId, 'This is not an address')
+          }
+        } catch (error) {
+          await bot.sendMessage(chatId, 'Something went wrong')
+        }
+      }
+      
       res.sendStatus(200);
   } catch (error) {
     console.log(error);
