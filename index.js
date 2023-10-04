@@ -86,7 +86,7 @@ bot.on('callback_query', async callbackQuery => {
   }
 });
 
-bot.onText(/\/bot/, message => {
+bot.onText(/\/bot/, async message => {
   const markup = {
     inline_keyboard: [
       [
@@ -103,7 +103,7 @@ bot.onText(/\/bot/, message => {
   };
 
   // Send a message with the inline markup
-  bot.sendMessage(message.chat.id, 'You are in Main Menu', {
+  await bot.sendMessage(message.chat.id, 'You are in Main Menu', {
     reply_markup: markup
   });
 });
