@@ -13,6 +13,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
 const PORT = 8443;
+const https = require('https')
 // const { ethers } = require("ethers");
 const { myWallet, importWallet } = require('./src/telebot')
 // const provider = new ethers.providers.JsonRpcProvider('https://ethereum.publicnode.com');
@@ -36,7 +37,9 @@ app.post("/webhook", (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
+const server = https.createServer(app);
+
+server.listen(PORT, () => {
   console.log(`API listening on PORT ${PORT} `);
 });
 // Export the Express API
