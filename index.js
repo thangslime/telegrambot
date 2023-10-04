@@ -39,6 +39,10 @@ app.post("/webhook", (req, res) => {
   }
 });
 
+app.listen(PORT, () => {
+  console.log(`API listening on PORT ${PORT} `);
+});
+
 // Export the Express API
 bot.on('callback_query', async callbackQuery => {
   // Get the callback_data
@@ -129,6 +133,3 @@ bot.on('message', async msg => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`API listening on PORT ${PORT} `);
-});
