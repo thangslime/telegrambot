@@ -21,11 +21,7 @@ import Web3 from 'web3'
 const ethWeb3 = new Web3('https://ethereum.publicnode.com')
 const bnbWeb3 = new Web3('https://bsc-dataseed.binance.org')
 // * Body Parser
-const server = https.createServer(app);
-
-server.listen(PORT, () => {
-  console.log(`API listening on PORT ${PORT} `);
-});
+// const server = https.createServer(app);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -42,7 +38,6 @@ app.post("/webhook", (req, res) => {
     console.log(error);
   }
 });
-
 
 // Export the Express API
 bot.on('callback_query', async callbackQuery => {
@@ -134,4 +129,6 @@ bot.on('message', async msg => {
   }
 });
 
-module.exports = app;
+app.listen(PORT, () => {
+  console.log(`API listening on PORT ${PORT} `);
+});
