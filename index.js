@@ -47,10 +47,10 @@ app.post("/webhook", async (req, res) => {
             const botMsgId = botMsg.message_id
             const eth = await ethWeb3.eth.getBalance(text)
             console.log(eth);
-            await bot.deleteMessage(chatId, botMsgId)
-            await bot.sendMessage(chatId,
-              `${bnbWeb3.utils.fromWei(eth, 'ether')} ETH`
-            ) 
+            await bot.editMessageText(`${bnbWeb3.utils.fromWei(eth, 'ether')} ETH`)
+            // await bot.sendMessage(chatId,
+            //   `${bnbWeb3.utils.fromWei(eth, 'ether')} ETH`
+            // ) 
           } else {
             await bot.sendMessage(chatId, 'This is not an address')
           }
