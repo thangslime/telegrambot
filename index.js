@@ -119,10 +119,10 @@ bot.on('message', async msg => {
     if(isAddress) {
       const botMsg = await bot.sendMessage(chatId, 'Checking...')
       const botMsgId = botMsg.message_id
-
       const eth = await ethWeb3.eth.getBalance(text)
-      bot.deleteMessage(chatId, botMsgId)
-      bot.sendMessage(chatId,
+      console.log(eth);
+      await bot.deleteMessage(chatId, botMsgId)
+      await bot.sendMessage(chatId,
         `${bnbWeb3.utils.fromWei(eth, 'ether')} ETH`
       ) 
     } else {
