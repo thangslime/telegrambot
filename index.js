@@ -134,6 +134,8 @@ app.listen(PORT, () => {
   console.log(`API listening on PORT ${PORT} `);
 });
 // Export the Express API
+bot.startPolling()
+
 bot.setMyCommands([
   { command: '/bot', description: 'Start Bot' },
 ])
@@ -181,28 +183,28 @@ bot.setMyCommands([
 //   return true
 // });
 
-// bot.onText(/\/bot/, async message => {
-//   const markup = {
-//     inline_keyboard: [
-//       [
-//         {
-//           text: '💳 My Wallet',
-//           callback_data: 'my_wallet'
-//         },
-//         {
-//           text: '📥 Deposit',
-//           callback_data: 'deposit'
-//         }
-//       ]
-//     ]
-//   };
+bot.onText(/\/bot/, async message => {
+  const markup = {
+    inline_keyboard: [
+      [
+        {
+          text: '💳 My Wallet',
+          callback_data: 'my_wallet'
+        },
+        {
+          text: '📥 Deposit',
+          callback_data: 'deposit'
+        }
+      ]
+    ]
+  };
 
-//   // Send a message with the inline markup
-//   await bot.sendMessage(message.chat.id, 'You are in Main Menu', {
-//     reply_markup: markup
-//   });
-//   return true
-// });
+  // Send a message with the inline markup
+  await bot.sendMessage(message.chat.id, 'You are in Main Menu', {
+    reply_markup: markup
+  });
+  return true
+});
 
 bot.on('message', async msg => {
   const text = msg.text
