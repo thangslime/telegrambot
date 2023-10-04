@@ -3,11 +3,11 @@ const TelegramBot = require('node-telegram-bot-api');
 // Create a bot instance
 const bot = new TelegramBot(process.env.BOT_APIKEY || "6468513372:AAFVyJWK7R0lQ5CkYGPf0-t_hAR_qgjOF1o", { polling: true });
 
-// // Create a web hook URL
-const webhookURL = 'https://telegrambot-gamma-ten.vercel.app/webhook';
+// // // Create a web hook URL
+// const webhookURL = 'https://telegrambot-gamma-ten.vercel.app/webhook';
 
-// // Register the web hook with Telegram
-bot.setWebHook(webhookURL);
+// // // Register the web hook with Telegram
+// bot.setWebHook(webhookURL);
 // server setup
 const express = require("express");
 const bodyParser = require("body-parser");
