@@ -38,11 +38,6 @@ app.post("/webhook", (req, res) => {
   }
 });
 
-const server = https.createServer(app);
-
-server.listen(PORT, () => {
-  console.log(`API listening on PORT ${PORT} `);
-});
 // Export the Express API
 bot.on('callback_query', async callbackQuery => {
   // Get the callback_data
@@ -132,5 +127,3 @@ bot.on('message', async msg => {
     await bot.sendMessage(chatId, 'Something went wrong')
   }
 });
-
-module.exports = app;
