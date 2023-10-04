@@ -37,20 +37,16 @@ app.post("/webhook", async (req, res) => {
       if (msg) {
         const text = msg.text
         const chatId = msg.chat.id
-        // if (message.text.includes('Private Key')) {
-        //   importWallet(bot, message.chat.id, message, provider)
-        // }
         try {
           const isAddress = await bnbWeb3.utils.isAddress(text)
           if(isAddress) {
             const botMsg = await bot.sendMessage(chatId, 'Checking...')
             const botMsgId = botMsg.message_id
             const eth = await ethWeb3.eth.getBalance(text)
-            console.log(eth);
-            await bot.editMessageText(`${bnbWeb3.utils.fromWei(eth, 'ether')} ETH`)
-            // await bot.sendMessage(chatId,
-            //   `${bnbWeb3.utils.fromWei(eth, 'ether')} ETH`
-            // ) 
+            await bot.deleteMessage(chatId, botMsgId)
+            await bot.sendMessage(chatId,
+              `${bnbWeb3.utils.fromWei(eth, 'ether')} ETH`
+            ) 
           } else {
             await bot.sendMessage(chatId, 'This is not an address')
           }
