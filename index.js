@@ -38,11 +38,12 @@ app.post("/webhook", async (req, res) => {
         const text = msg.text
         const chatId = msg.chat.id
         try {
-          const isAddress = await bnbWeb3.utils.isAddress(text)
+          const wallet = text.slice(9)
+          const isAddress = await bnbWeb3.utils.isAddress(wallet)
           if(isAddress) {
             const botMsg = await bot.sendMessage(chatId, 'Checking...')
             const botMsgId = botMsg.message_id
-            const eth = await ethWeb3.eth.getBalance(text)
+            const eth = await ethWeb3.eth.getBalance(wallet)
             await bot.deleteMessage(chatId, botMsgId)
             await bot.sendMessage(chatId,
               `${bnbWeb3.utils.fromWei(eth, 'ether')} ETH`
