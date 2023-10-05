@@ -31,23 +31,19 @@ const myWallet = async (bot, chat_id) => {
     return true
 }
 
-const importWallet = async (bot, chat_id, data, provider) => { 
+const importWallet = async (bot, msg) => { 
+    const text = msg.text
+    const chatId = msg.chat.id
     try {
-        const private_key = data.text.slice(12)
-        const wallet = new ethers.Wallet(private_key)
-        if (wallet) {
-            provider.getBalance(wallet.address).then((_balance) => {
-                const balance = ethers.utils.formatEther(_balance);
-                bot.sendMessage(chat_id, `<b>Your wallet address:</b> ${wallet.address}\n<b>Balance:</b> ${balance || 0} ETH`,{parse_mode: "HTML"});
-            })
+        const privateKey = text.slice(8)
+        const isAddress = await ethWeb3.eth.accounts.privateKeyToAccount(privateKey);
+        if(isAddress) {
+            await bot.sendMessage(chatId, `${isAddress.address}`) 
         } else {
-            bot.sendMessage(chat_id, `Invalid Private Key`);
+            await bot.sendMessage(chatId, 'This is not an address')
         }
-    
-        return true
     } catch (error) {
-        console.log(error);
-        bot.sendMessage(chat_id, error.message);
+        await bot.sendMessage(chatId, 'Something went wrong')
     }
 }
 
@@ -55,19 +51,19 @@ const checkBalance = async (bot, msg) => {
     const text = msg.text
     const chatId = msg.chat.id
     try {
-    const wallet = text.slice(9)
-    const isAddress = await bnbWeb3.utils.isAddress(wallet)
-    if(isAddress) {
-        const botMsg = await bot.sendMessage(chatId, 'Checking...')
-        const botMsgId = botMsg.message_id
-        const eth = await ethWeb3.eth.getBalance(wallet)
-        await bot.deleteMessage(chatId, botMsgId)
-        await bot.sendMessage(chatId,
-        `${bnbWeb3.utils.fromWei(eth, 'ether')} ETH`
-        ) 
-    } else {
-        await bot.sendMessage(chatId, 'This is not an address')
-    }
+        const wallet = text.slice(9)
+        const isAddress = await bnbWeb3.utils.isAddress(wallet)
+        if(isAddress) {
+            const botMsg = await bot.sendMessage(chatId, 'Checking...')
+            const botMsgId = botMsg.message_id
+            const eth = await ethWeb3.eth.getBalance(wallet)
+            await bot.deleteMessage(chatId, botMsgId)
+            await bot.sendMessage(chatId,
+            `${bnbWeb3.utils.fromWei(eth, 'ether')} ETH`
+            ) 
+        } else {
+            await bot.sendMessage(chatId, 'This is not an address')
+        }
     } catch (error) {
         await bot.sendMessage(chatId, 'Something went wrong')
     }

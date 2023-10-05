@@ -14,7 +14,7 @@ const bodyParser = require("body-parser");
 const app = express();
 const PORT = 8443;
 // const { ethers } = require("ethers");
-const { myWallet, checkBalance, mainMenu } = require('./src/telebot')
+const { myWallet, checkBalance, mainMenu, importWallet } = require('./src/telebot')
 // const provider = new ethers.providers.JsonRpcProvider('https://ethereum.publicnode.com');
 // * Body Parser
 // const server = https.createServer(app);
@@ -26,7 +26,7 @@ app.get("/", (req, res) => {
 });
 
 const checkCommand = (msg) => {
-  const commands = ['/balance', '/menu']
+  const commands = ['/balance', '/menu', '/import']
   let res = {
     command: '',
     check: false
@@ -57,6 +57,9 @@ app.post("/webhook", async (req, res) => {
             case '/menu':
               mainMenu(bot, msg)
               break;
+            case '/import':
+              await importWallet(bot, msg)
+              break;
             default:
               break;
           }
@@ -81,6 +84,10 @@ bot.setMyCommands([
   {
     command: '/menu',
     description: 'Main menu'
+  },
+  {
+    command: '/import',
+    description: 'Import wallet by Private Key E.G. "/import private_key"'
   }
 ])
 
