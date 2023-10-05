@@ -14,11 +14,8 @@ const bodyParser = require("body-parser");
 const app = express();
 const PORT = 8443;
 // const { ethers } = require("ethers");
-const { myWallet, importWallet } = require('./src/telebot')
+const { myWallet, checkBalance, mainMenu } = require('./src/telebot')
 // const provider = new ethers.providers.JsonRpcProvider('https://ethereum.publicnode.com');
-const Web3 = require('web3')
-const ethWeb3 = new Web3('https://ethereum.publicnode.com')
-const bnbWeb3 = new Web3('https://bsc-dataseed.binance.org')
 // * Body Parser
 // const server = https.createServer(app);
 app.use(bodyParser.json());
@@ -29,11 +26,17 @@ app.get("/", (req, res) => {
 });
 
 const checkCommand = (msg) => {
-  const commands = ['/balance']
-  let res = false
+  const commands = ['/balance', '/menu']
+  let res = {
+    command: '',
+    check: false
+  }
   commands.forEach(item => {
     if (msg.includes(item)) {
-      res = true
+      res = {
+        command: item,
+        check: true
+      }
     }
   })
   return res
@@ -45,25 +48,17 @@ app.post("/webhook", async (req, res) => {
       // bot.processUpdate(req.body)
       const msg = req.body.message
       if (msg) {
-        if (checkCommand(msg.text)) {
-          const text = msg.text
-          const chatId = msg.chat.id
-          try {
-            const wallet = text.slice(9)
-            const isAddress = await bnbWeb3.utils.isAddress(wallet)
-            if(isAddress) {
-              const botMsg = await bot.sendMessage(chatId, 'Checking...')
-              const botMsgId = botMsg.message_id
-              const eth = await ethWeb3.eth.getBalance(wallet)
-              await bot.deleteMessage(chatId, botMsgId)
-              await bot.sendMessage(chatId,
-                `${bnbWeb3.utils.fromWei(eth, 'ether')} ETH`
-              ) 
-            } else {
-              await bot.sendMessage(chatId, 'This is not an address')
-            }
-          } catch (error) {
-            await bot.sendMessage(chatId, 'Something went wrong')
+        const checkData = checkCommand(msg.text)
+        if (checkData.check) {
+          switch (checkData.command) {
+            case '/balance':
+              checkBalance(bot, msg)
+              break;
+            case '/menu':
+              mainMenu(bot, msg)
+              break;
+            default:
+              break;
           }
         }
       }
@@ -82,6 +77,10 @@ bot.setMyCommands([
   {
     command: '/balance',
     description: 'Send with your EVM wallet address E.G. "/balance 0x93...3fa"'
+  },
+  {
+    command: '/menu',
+    description: 'Main menu'
   }
 ])
 
