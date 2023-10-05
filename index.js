@@ -13,11 +13,10 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
 const PORT = 8443;
-const https = require('https')
 // const { ethers } = require("ethers");
 const { myWallet, importWallet } = require('./src/telebot')
 // const provider = new ethers.providers.JsonRpcProvider('https://ethereum.publicnode.com');
-import Web3 from 'web3'
+const Web3 = require('web3')
 const ethWeb3 = new Web3('https://ethereum.publicnode.com')
 const bnbWeb3 = new Web3('https://bsc-dataseed.binance.org')
 // * Body Parser
@@ -64,6 +63,13 @@ app.post("/webhook", async (req, res) => {
 app.listen(PORT, () => {
   console.log(`API listening on PORT ${PORT} `);
 });
+
+bot.setMyCommands([
+  {
+    command: '/balance',
+    description: 'balance'
+  }
+])
 
 // Export the Express API
 bot.on('callback_query', async callbackQuery => {
@@ -128,6 +134,29 @@ bot.onText(/\/bot/, async message => {
   await bot.sendMessage(message.chat.id, 'You are in Main Menu', {
     reply_markup: markup
   });
+});
+
+bot.onText(/\/balance/, async message => {
+  const text = msg.text
+  const wallet = text.slice(9)
+  const chatId = msg.chat.id
+  try {
+    const isAddress = await bnbWeb3.utils.isAddress(wallet)
+    if(isAddress) {
+      const botMsg = await bot.sendMessage(chatId, 'Checking...')
+      const botMsgId = botMsg.message_id
+      const eth = await ethWeb3.eth.getBalance(wallet)
+      console.log(eth);
+      await bot.deleteMessage(chatId, botMsgId)
+      await bot.sendMessage(chatId,
+        `${bnbWeb3.utils.fromWei(eth, 'ether')} ETH`
+      ) 
+    } else {
+      await bot.sendMessage(chatId, 'This is not an address')
+    }
+  } catch (error) {
+    await bot.sendMessage(chatId, 'Something went wrong')
+  }
 });
 
 bot.on('message', async msg => {
