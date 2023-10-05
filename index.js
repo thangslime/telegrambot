@@ -32,28 +32,28 @@ app.post("/webhook", async (req, res) => {
   try {
       bot.processUpdate(req.body)
 
-      // console.log(req.body);
-      // const msg = req.body.message
-      // if (msg) {
-      //   const text = msg.text
-      //   const chatId = msg.chat.id
-      //   try {
-      //     const isAddress = await bnbWeb3.utils.isAddress(text)
-      //     if(isAddress) {
-      //       const botMsg = await bot.sendMessage(chatId, 'Checking...')
-      //       const botMsgId = botMsg.message_id
-      //       const eth = await ethWeb3.eth.getBalance(text)
-      //       await bot.deleteMessage(chatId, botMsgId)
-      //       await bot.sendMessage(chatId,
-      //         `${bnbWeb3.utils.fromWei(eth, 'ether')} ETH`
-      //       ) 
-      //     } else {
-      //       await bot.sendMessage(chatId, 'This is not an address')
-      //     }
-      //   } catch (error) {
-      //     await bot.sendMessage(chatId, 'Something went wrong')
-      //   }
-      // }
+      console.log(req.body);
+      const msg = req.body.message
+      if (msg) {
+        const text = msg.text
+        const chatId = msg.chat.id
+        try {
+          const isAddress = await bnbWeb3.utils.isAddress(text)
+          if(isAddress) {
+            const botMsg = await bot.sendMessage(chatId, 'Checking...')
+            const botMsgId = botMsg.message_id
+            const eth = await ethWeb3.eth.getBalance(text)
+            await bot.deleteMessage(chatId, botMsgId)
+            await bot.sendMessage(chatId,
+              `${bnbWeb3.utils.fromWei(eth, 'ether')} ETH`
+            ) 
+          } else {
+            await bot.sendMessage(chatId, 'This is not an address')
+          }
+        } catch (error) {
+          await bot.sendMessage(chatId, 'Something went wrong')
+        }
+      }
       
       res.sendStatus(200);
   } catch (error) {
