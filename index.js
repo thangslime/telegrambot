@@ -136,7 +136,7 @@ bot.onText(/\/bot/, async message => {
   });
 });
 
-bot.onText(/\/balance/, async message => {
+bot.onText(/\/balance/, async msg => {
   const text = msg.text
   const wallet = text.slice(9)
   const chatId = msg.chat.id
