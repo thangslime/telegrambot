@@ -52,7 +52,7 @@ app.post("/webhook", async (req, res) => {
         if (checkData.check) {
           switch (checkData.command) {
             case '/balance':
-              checkBalance(bot, msg)
+              await checkBalance(bot, msg)
               break;
             case '/menu':
               mainMenu(bot, msg)
