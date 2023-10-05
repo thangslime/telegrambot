@@ -41,6 +41,7 @@ const checkCommand = (msg) => {
 
 app.post("/webhook", async (req, res) => {
   try {
+      console.log(req.body);
       // bot.processUpdate(req.body)
       const msg = req.body.message
       if (msg) {
