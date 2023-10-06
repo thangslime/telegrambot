@@ -18,6 +18,7 @@ const { myWallet, checkBalance, mainMenu, importWallet } = require('./src/telebo
 // const provider = new ethers.providers.JsonRpcProvider('https://ethereum.publicnode.com');
 // * Body Parser
 // const server = https.createServer(app);
+const fs = require('fs')
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -48,6 +49,10 @@ app.post("/webhook", async (req, res) => {
       // bot.processUpdate(req.body)
       const msg = req.body.message
       if (msg) {
+        if (msg.text === '/start') {
+          const photo = await fs.readFileSync('./public/A3.jpg')
+          bot.sendPhoto(msg.chat.id, photo, { caption: `Các lệnh có thể dùng \n/balance - Kiểm tra số dư ETH theo địa chỉ ví ví dụ: "/balance 0xgd...3hf"` })
+        }
         const checkData = checkCommand(msg.text)
         if (checkData.check) {
           switch (checkData.command) {
