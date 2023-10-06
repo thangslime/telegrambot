@@ -50,7 +50,7 @@ app.post("/webhook", async (req, res) => {
       const msg = req.body.message
       if (msg) {
         if (msg.text === '/start') {
-          const photo = __dirname + './public/A3.jpg'
+          const photo = 'A3.jpg'
           bot.sendPhoto(msg.chat.id, photo, { caption: `Các lệnh có thể dùng \n/balance - Kiểm tra số dư ETH theo địa chỉ ví ví dụ: "/balance 0xgd...3hf"` })
         }
         const checkData = checkCommand(msg.text)
