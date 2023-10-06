@@ -52,21 +52,22 @@ app.post("/webhook", async (req, res) => {
         if (msg.text === '/start') {
           const photo = 'A3.jpg'
           bot.sendPhoto(msg.chat.id, photo, { caption: `Các lệnh có thể dùng \n/balance - Kiểm tra số dư ETH theo địa chỉ ví ví dụ: "/balance 0xgd...3hf"` })
-        }
-        const checkData = checkCommand(msg.text)
-        if (checkData.check) {
-          switch (checkData.command) {
-            case '/balance':
-              await checkBalance(bot, msg)
-              break;
-            case '/menu':
-              mainMenu(bot, msg)
-              break;
-            case '/import':
-              await importWallet(bot, msg)
-              break;
-            default:
-              break;
+        } else {
+          const checkData = checkCommand(msg.text)
+          if (checkData.check) {
+            switch (checkData.command) {
+              case '/balance':
+                await checkBalance(bot, msg)
+                break;
+              case '/menu':
+                mainMenu(bot, msg)
+                break;
+              case '/import':
+                await importWallet(bot, msg)
+                break;
+              default:
+                break;
+            }
           }
         }
       }
